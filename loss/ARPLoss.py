@@ -48,7 +48,6 @@ class ARPLoss(nn.CrossEntropyLoss):
         loss_r2 = F.mse_loss(x, center_batch2) / 2
 
         loss = loss + self.weight_pl * loss_r + loss2 + self.weight_pl * loss_r2
-        # loss = loss  + loss2 + self.weight_pl * loss_r2
         return logits, loss
 
     def fake_loss(self, x):
