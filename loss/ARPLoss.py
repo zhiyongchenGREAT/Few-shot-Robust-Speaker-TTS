@@ -10,13 +10,13 @@ class ARPLoss(nn.CrossEntropyLoss):
         self.use_gpu = options['use_gpu']
         self.weight_pl = float(options['weight_pl'])
         self.temp = options['temp']
-        self.Dist = Dist(num_classes=options['num_classes'], feat_dim=options['feat_dim'],init = "zero")
+        self.Dist = Dist(num_classes=options['num_classes'], feat_dim=options['feat_dim'], init = "zero")
         self.points = self.Dist.centers
         self.radius = nn.Parameter(torch.Tensor(1))
         self.radius.data.fill_(0)
         self.margin_loss = nn.MarginRankingLoss(margin=1.0)
 
-        self.Dist2 = Dist(num_classes=options['num_classes'], feat_dim=options['feat_dim']) 
+        self.Dist2 = Dist(num_classes=options['num_classes'], feat_dim=options['feat_dim'], init = "zero") 
 
     def forward(self, x, y, labels=None, return_dist=False):
   
@@ -37,9 +37,7 @@ class ARPLoss(nn.CrossEntropyLoss):
 
         # Margin loss
         center_batch = self.points[labels, :]
-        _dis_known = torch.sum(x * center_batch, dim=1, keepdim=False)
-        # _dis_known = - torch.sum(x * center_batch, dim=1, keepdim=False)
-        # _dis_known = (x - center_batch).pow(2).mean(1)
+        _dis_known = (x - center_batch).pow(2).mean(1)
         target = torch.ones(_dis_known.size()).cuda()
         # target = torch.ones(_dis_known.size())
         loss_r = self.margin_loss(self.radius, _dis_known, target)
