@@ -21,7 +21,7 @@ import numpy as np
 parser = argparse.ArgumentParser("Training")
 
 # Dataset
-parser.add_argument('--dataset', type=str, default='avsp', help="avsp")
+parser.add_argument('--dataset', type=str, default='esd')
 parser.add_argument('--outf', type=str, default='./log')
 
 # optimization
@@ -43,10 +43,10 @@ parser.add_argument('--ns', type=int, default=1)
 parser.add_argument('--eval-freq', type=int, default=1)
 parser.add_argument('--print-freq', type=int, default=100)
 parser.add_argument('--gpu', type=str, default='0')
-parser.add_argument('--seed', type=int, default=14)
+parser.add_argument('--seed', type=int, default=0)
 parser.add_argument('--use-cpu', action='store_true')
 parser.add_argument('--save-dir', type=str, default='../log')
-parser.add_argument('--loss', type=str, default='ARPLoss')
+parser.add_argument('--loss', type=str, default='SpeakerRPL')
 parser.add_argument('--eval', action='store_true', help="Eval", default=False)
 
 from score.my_scorer import score_me
@@ -69,14 +69,14 @@ def main_worker(options):
     # Dataset
     print("{} Preparation".format(options['dataset']))
     
-    Data = SpeakerDataloader(known=list(range(17)), train_root='./data/IEMOCAP/train3+gpt3_control_00', 
-                            test_root='./data/IEMOCAP/test3', batch_size=options['batch_size'])
+    Data = SpeakerDataloader(known=list(range(17)), train_root='./data/enrollment_finetune_embeddings_EResNetV2/ESD/train1_full_controlling(14)', 
+                            test_root='./data/test_embeddings_EResNetV2/ESD/test1', batch_size=options['batch_size'])
     
     trainloader, testloader, outloader = Data.train_loader, Data.test_loader, Data.out_loader
     
     options['num_classes'] = Data.num_classes
 
-    print("Creating model: {}".format('classifier_spk'))
+    print("Creating model: {}".format('classifier_spk_eresnet'))
     net = classifier_spk_eresnet(num_classes=options['num_classes'])
 
     feat_dim = 192
@@ -96,7 +96,7 @@ def main_worker(options):
         criterion = criterion.cuda()
 
 
-    model_path = os.path.join(options['outf'], 'models_iemocap', options['dataset'])
+    model_path = os.path.join(options['outf'], 'models_esd', options['dataset'])
     if not os.path.exists(model_path):
         os.makedirs(model_path)
     
@@ -194,7 +194,7 @@ if __name__ == '__main__':
     results = dict()
 
     dir_name = '{}_{}'.format(options['model'], options['loss'])
-    dir_path = os.path.join(options['outf'], 'results_iemocap', dir_name)
+    dir_path = os.path.join(options['outf'], 'results_esd', dir_name)
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
