@@ -4,9 +4,9 @@ import torch.nn.functional as F
 from loss.Dist import Dist
 
 
-class ARPLoss(nn.CrossEntropyLoss):
+class SpeakerRPL(nn.CrossEntropyLoss):
     def __init__(self, **options):
-        super(ARPLoss, self).__init__()
+        super(SpeakerRPL, self).__init__()
         self.use_gpu = options['use_gpu']
         self.weight_pl = float(options['weight_pl'])
         self.temp = options['temp']
@@ -25,9 +25,6 @@ class ARPLoss(nn.CrossEntropyLoss):
 
         if return_dist:
             max_distances = dist_dot_p.max(dim=1).values
-            # max_distances = torch.max(-logits, dim=1).values  
-            # print(max_distances)
-            # print(max_distances.shape)
             return max_distances
 
         if labels is None:
