@@ -1,5 +1,6 @@
-# Few-shot Robust Speaker Recognition with TTS
-Towards Robust Speaker Recognition against Intrinsic Variation with Foundation Model Few-shot Tuning and Effective Speech Synthesis
+# Few-shot Robust Speaker Recognition with TTS  
+*Towards Robust Speaker Recognition against Intrinsic Variation with Foundation Model Few-shot Tuning and Effective Speech Synthesis*
+
 ## Overview
 
 Speaker recognition is a cornerstone for secure authentication and personalized voice assistants in smart home environments. However, intrinsic speaker variability—such as aging and emotional fluctuations—poses significant challenges. Traditional approaches, which rely heavily on pretraining and large datasets, often struggle to adapt to dynamic conditions.
@@ -11,6 +12,10 @@ To overcome these limitations, we introduce a novel framework for time-varying a
 - **Optimized synthetic data selection strategies** and **open-set SpeakerRPL loss training** to enhance generalization and robustness against both intrinsic variability and unknown outliers.
 
 Our method demonstrates strong performance across multiple emotionally diverse and time-varying benchmarks, pushing the boundaries of robust speaker recognition in real-world scenarios.
+##
+- [ ] TODO: Check running for osr_spk_eres.py
+- [ ] TODO: Check introduction to datasets
+
 
 ## Code
 
@@ -20,15 +25,25 @@ Run the few-shot training script for each evaluation split:
 python osr_spk_eres.py --loss SpeakerRPL --finetune_data_split {} --evaluation_data_split {}
 ```
 
-Compare and evaluate with *direct* enrollment and cosine simlarity scoring. Refer to:
+Other loss functions can be tried by varying the *loss* parameter.
+
+Compare and evaluate with direct enrollment and cosine similarity scoring. Refer to:
 
 ```
 inference_for_direct_baseline.ipynb
 ```
 
+Example code for implementing a controlling policy for synthesis data selection (for demonstration purposes):
+
+```
+syn_select_controlling_policy.ipynb
+```
+
+*Note*: A sufficient number of new speaker samples and utterances per speaker (for both unknown and target speakers) should be synthesized and sampled using the above controlling policy.
+
 ## Datasets
 
-### Training Data
+### Core Training Split Data
 
 Our training and testing datasets are available on Hugging Face:
 
@@ -37,6 +52,15 @@ Our training and testing datasets are available on Hugging Face:
 </a>
 
 [Robust Speaker Recognition OSI with TTS](https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS)
+
+We provide augmented datasets (in ERes2Net embedding format) generated using multiple data augmentation and sampling strategies, as described in the paper. These datasets are directly usable with the training script and include evaluation splits for all four benchmark datasets. We also provide the original, unaugmented, and unarranged waveforms for each speaker to facilitate further research.
+
+| Dataset                       | Description                                                        |
+|-------------------------------|--------------------------------------------------------------------|
+| **ESD**                     | Strong emotion variation                                           |
+| **IEMOCAP**                 | Strong emotion variation and wild-collected data                   |
+| **Voxceleb2(test)-Voxwatch**  | 110+ speakers in the wild                                          |
+| **SpeakerAging**            | 15+ speakers with short-term variation (1-year timespan)            |
 
 ### Pretrained Weights
 
@@ -48,18 +72,18 @@ Access the pretrained weights:
 
 [Robust Speaker Recognition OSI with TTS](https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS)
 
-## Dataset Directory Structure
+## Dataset Directory Structure (Embeddings for experiments)
 
 The datasets are organized as follows:
 
-### Enrollment Finetune Embeddings for all splits (ERes2NetV2)
+### Enrollment Finetune Embeddings for All Splits (ERes2NetV2)
 
 | Speaker IDs | Description                |
 |-------------|----------------------------|
 | 0 - 4       | Target speakers            |
 | > 4        | Synthetic unknown speakers |
 
-### Test Embeddings for all splits (ERes2NetV2)
+### Test Embeddings for All Splits (ERes2NetV2)
 
 | Speaker IDs | Description      |
 |-------------|------------------|
