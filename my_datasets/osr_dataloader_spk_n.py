@@ -28,9 +28,7 @@ class SpeakerEmbeddingDataset(Dataset):
             for file in files:
                 if file.endswith('.npy'):
                     file_path = os.path.join(speaker_folder, file)
-                    # embedding = torch.load(file_path).squeeze()
                     embedding = np.load(file_path).squeeze()
-                    # assert embedding.shape == (512,), f"Expected embedding shape (256,), but got {embedding.shape}"
                     assert embedding.shape == (192,), f"Expected embedding shape (192,), but got {embedding.shape}"
 
                     if self.known is None or \
@@ -69,36 +67,13 @@ class SpeakerDataloader:
         trainset = SpeakerEmbeddingDataset(train_root, known=self.known, mask='known')
         self.train_loader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=num_workers, pin_memory=use_gpu)
 
-        # outtrainset = SpeakerEmbeddingDataset(train_root, known=self.known, mask='unknown')
-        # self.trainout_loader = DataLoader(outtrainset, batch_size=batch_size, shuffle=True, num_workers=num_workers, pin_memory=use_gpu)
-
-        # Loaders for the test set - known speakers
+        # Loaders for the test set - target speakers
         testset_known = SpeakerEmbeddingDataset(test_root, known=self.known, mask='known')
         self.test_loader = DataLoader(testset_known, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=use_gpu)
 
-        # Loaders for the test set - unknown speakers
+        # Loaders for the test set - outliers
         testset_unknown = SpeakerEmbeddingDataset(test_root, known=self.known, mask='unknown')
         self.out_loader = DataLoader(testset_unknown, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=use_gpu)
 
 
         print('Train: ', len(trainset), 'Test Known: ', len(testset_known), 'Test Unknown: ', len(testset_unknown))
-
-
-class SpeakerDataloader_tmp:
-    def __init__(
-        self, 
-        known: List[int],
-        train_root: str,
-        test_root: str,
-        use_gpu: bool = True, 
-        num_workers: int = 8, 
-        batch_size: int = 128
-    ):
-        self.known = known
-        self.num_classes = len(known)
-
-        # Loaders for the training set
-        trainset = SpeakerEmbeddingDataset(train_root, known=self.known, mask='known')
-        self.train_loader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=num_workers, pin_memory=use_gpu)
-
-        print('Train: ', len(trainset))
