@@ -36,9 +36,7 @@ Access pretrained weights from our Hugging Face repository:
 
 [Robust Speaker Recognition OSI with TTS](https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS)
 
-## Note
-
-### Dataset Directory Structure
+## Dataset Directory Structure
 
 The training and testing datasets are organized as follows:
 
