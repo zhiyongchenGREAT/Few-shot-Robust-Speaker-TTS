@@ -21,7 +21,7 @@ import numpy as np
 parser = argparse.ArgumentParser("Training")
 
 # Dataset
-parser.add_argument('--dataset', type=str, default='esd')
+parser.add_argument('--dataset', type=str, default='avsp')
 parser.add_argument('--outf', type=str, default='./log')
 
 # optimization
