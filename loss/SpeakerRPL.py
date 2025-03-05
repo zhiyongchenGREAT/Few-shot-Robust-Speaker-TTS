@@ -25,9 +25,6 @@ class SpeakerRPL(nn.CrossEntropyLoss):
 
         if return_dist:
             max_distances = dist_dot_p.max(dim=1).values
-            # max_distances = torch.max(-logits, dim=1).values  
-            # print(max_distances)
-            # print(max_distances.shape)
             return max_distances
 
         if labels is None:
