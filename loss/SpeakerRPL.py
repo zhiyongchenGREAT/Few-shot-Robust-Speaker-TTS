@@ -4,9 +4,9 @@ import torch.nn.functional as F
 from loss.Dist import Dist
 
 
-class ARPLoss(nn.CrossEntropyLoss):
+class SpeakerRPL(nn.CrossEntropyLoss):
     def __init__(self, **options):
-        super(ARPLoss, self).__init__()
+        super(SpeakerRPL, self).__init__()
         self.use_gpu = options['use_gpu']
         self.weight_pl = float(options['weight_pl'])
         self.temp = options['temp']
