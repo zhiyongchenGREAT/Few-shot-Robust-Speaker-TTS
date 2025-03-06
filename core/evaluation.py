@@ -2,17 +2,6 @@ import os
 import sys
 import numpy as np
 
-def compute_eer(fpr, tpr):
-    fnr=1-tpr
-    diff_pm_fa = fnr - fpr
-    x1 = np.flatnonzero(diff_pm_fa >= 0)[0]
-    x2 = np.flatnonzero(diff_pm_fa < 0)[-1]
-    a = (fnr[x1] - fpr[x1]) / (fpr[x2] - fpr[x1] - (fnr[x2] - fnr[x1]))
-    return fnr[x1] + a * (fnr[x2] - fnr[x1])
-
-
-
-
 def get_curve_online(known, novel, stypes = ['Bas']):
     tp, fp = dict(), dict()
     tnr_at_tpr95 = dict()
