@@ -11,12 +11,12 @@ import torch.nn.functional as F
 from torch.optim import lr_scheduler
 import torch.multiprocessing as mp
 import torch.backends.cudnn as cudnn
-
+import numpy as np
 from models.models import classifier_spk_eresnet
 from my_datasets.osr_dataloader_spk_n import SpeakerDataloader
 from utils import Logger, save_networks, load_networks
 from core import train, test, test_my
-import numpy as np
+from score.my_scorer import score_me
 
 parser = argparse.ArgumentParser("Training")
 
@@ -49,8 +49,6 @@ parser.add_argument('--gpu', type=str, default='0')
 parser.add_argument('--seed', type=int, default=0)
 parser.add_argument('--use-cpu', action='store_true')
 parser.add_argument('--eval', action='store_true', help="Eval", default=False)
-
-from score.my_scorer import score_me
 
 def main_worker(options):
     torch.manual_seed(options['seed'])
