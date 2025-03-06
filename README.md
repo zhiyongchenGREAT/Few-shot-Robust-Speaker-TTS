@@ -29,13 +29,13 @@ Other loss functions can be tried by varying the *loss* parameter.
 
 Compare and evaluate with direct enrollment and cosine similarity scoring. Refer to:
 
-```
+```bash
 inference_for_direct_baseline.ipynb
 ```
 
 Example code for implementing a controlling policy for synthesis data selection (for demonstration purposes):
 
-```
+```bash
 syn_select_controlling_policy.ipynb
 ```
 
@@ -72,29 +72,31 @@ Access the pretrained weights of one split for ESD and Voxwatch for demonstratio
 
 [Robust Speaker Recognition OSI with TTS](https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS)
 
-```
+```bash
 osr_spk_eres.py --loss SpeakerRPL --model-path {} --evaluation-data-split {}
 ```
 
-## Dataset Directory Structure (Embeddings for experiments)
+## Dataset Directory Structure (Embeddings for Experiments)
 
-The datasets are organized as follows:
+The embedding datasets <a href="https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS">
+  <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" width="30" />
+</a> for each split are organized as follows:
 
-### Enrollment Finetune Embeddings for All Splits (ERes2NetV2)
+### Enrollment Finetuning Embeddings for Each Split (ERes2NetV2)
 
 | Speaker IDs | Description                |
 |-------------|----------------------------|
 | 0 - 4       | Target speakers            |
 | > 4        | Synthetic unknown speakers |
 
-### Test Embeddings for All Splits (ERes2NetV2)
+### Test Embeddings for Each Split (ERes2NetV2)
 
 | Speaker IDs | Description      |
 |-------------|------------------|
 | 0 - 4       | Target speakers  |
 | > 4        | Outlier speakers |
 
-*Note:* The mapping between speaker IDs and their corresponding categories differs between the enrollment and test splits.
+*Note:* The mapping between speaker IDs in each experimental split and their corresponding true IDs is different.
 
 ## Citation
 
