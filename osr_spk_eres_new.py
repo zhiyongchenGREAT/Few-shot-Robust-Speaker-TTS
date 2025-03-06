@@ -15,7 +15,7 @@ import numpy as np
 from models.models import classifier_spk_eresnet
 from my_datasets.osr_dataloader_spk_n import SpeakerDataloader
 from utils import Logger, save_networks, load_networks
-from core import train, test, test_my
+from core import train, test_my
 from score.my_scorer import score_me
 from score.evaluate_metrics import calculate_eer_metrics, print_metrics
 
