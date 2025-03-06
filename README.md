@@ -22,7 +22,7 @@ Our method demonstrates strong performance across multiple emotionally diverse a
 Run the few-shot training script for each evaluation split:
 
 ```bash
-python osr_spk_eres.py --loss SpeakerRPL --finetune_data_split {} --evaluation_data_split {}
+python osr_spk_eres.py --loss SpeakerRPL --finetune-data-split {} --evaluation-data-split {}
 ```
 
 Other loss functions can be tried by varying the *loss* parameter.
@@ -73,7 +73,7 @@ Access the pretrained weights of one split for ESD and Voxwatch for demostration
 [Robust Speaker Recognition OSI with TTS](https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS)
 
 ```
-osr_spk_eres.py --loss SpeakerRPL --model_path {} --evaluation_data_split {}
+osr_spk_eres.py --loss SpeakerRPL --model-path {} --evaluation-data-split {}
 ```
 
 ## Dataset Directory Structure (Embeddings for experiments)
