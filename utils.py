@@ -83,11 +83,11 @@ def save_networks(networks, result_dir, name='', loss='', criterion=None):
 
 def load_networks(networks, result_dir, name='', loss='', criterion=None):
     weights = networks.state_dict()
-    filename = '{}/checkpoints/{}_{}.pth'.format(result_dir, name, loss)
+    filename = '{}/{}.pth'.format(result_dir, name)
     networks.load_state_dict(torch.load(filename),strict=False)
     if criterion:
         weights = criterion.state_dict()
-        filename = '{}/checkpoints/{}_{}_criterion.pth'.format(result_dir, name, loss)
+        filename = '{}/{}.pth'.format(result_dir, loss)
         criterion.load_state_dict(torch.load(filename))
 
     return networks, criterion

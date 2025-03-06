@@ -21,8 +21,11 @@ import numpy as np
 parser = argparse.ArgumentParser("Training")
 
 # Dataset
-parser.add_argument('--dataset', type=str, default='avsp')
+# parser.add_argument('--dataset', type=str, default='avsp')
+parser.add_argument('--finetune-data-split', type=str, default='./log')
+parser.add_argument('--evaluation-data-split', type=str, default='./log')
 parser.add_argument('--outf', type=str, default='./log')
+parser.add_argument('--model-path', type=str, default='./model_path')
 
 # optimization
 parser.add_argument('--batch-size', type=int, default=16)
@@ -32,10 +35,10 @@ parser.add_argument('--stepsize', type=int, default=30)
 parser.add_argument('--temp', type=float, default=1.0, help="temp")
 parser.add_argument('--num-centers', type=int, default=1)
 
-# model
+# model hyperparams (keep these)
 parser.add_argument('--weight-pl', type=float, default=5, help="weight for center loss")
 parser.add_argument('--beta', type=float, default=0.001, help="weight for entropy loss")
-parser.add_argument('--model', type=str, default='classifier32')
+parser.add_argument('--model', type=str, default='adapter')
 
 # misc
 parser.add_argument('--nz', type=int, default=128)
@@ -67,10 +70,10 @@ def main_worker(options):
         print("Currently using CPU")
 
     # Dataset
-    print("{} Preparation".format(options['dataset']))
+    print("{} Preparation".format(options['finetune_data_split']))
     
-    Data = SpeakerDataloader(known=list(range(17)), train_root='./data/enrollment_finetune_embeddings_EResNetV2/ESD/train1_full_controlling(14)', 
-                            test_root='./data/test_embeddings_EResNetV2/ESD/test1', batch_size=options['batch_size'])
+    Data = SpeakerDataloader(known=list(range(17)), train_root=options['finetune_data_split'], 
+                            test_root=options['evaluation_data_split'], batch_size=options['batch_size'])
     
     trainloader, testloader, outloader = Data.train_loader, Data.test_loader, Data.out_loader
     
@@ -96,15 +99,17 @@ def main_worker(options):
         criterion = criterion.cuda()
 
 
-    model_path = os.path.join(options['outf'], 'models_esd', options['dataset'])
+    # model_path = os.path.join(options['outf'], 'models_esd', options['dataset'])
+    model_path = options['model_path']
     if not os.path.exists(model_path):
         os.makedirs(model_path)
     
     
-    file_name = '{}_{}'.format(options['model'], options['loss'])
+    # file_name = '{}_{}'.format(options['model'], options['loss'])
+    # file_name = 'adapter'
 
     if options['eval']:
-        net, criterion = load_networks(net, model_path, file_name, criterion=criterion)
+        net, criterion = load_networks(net, model_path, name=file_name, loss=options['loss'])
         results = test(net, criterion, testloader, outloader, epoch=0, **options)
         print("Acc (%): {:.3f}\t AUROC (%): {:.3f}\t OSCR (%): {:.3f}\t".format(results['ACC'], results['AUROC'], results['OSCR']))
 
@@ -198,7 +203,7 @@ if __name__ == '__main__':
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
-    file_name = options['dataset'] + '.csv'
+    file_name = 'results.csv'
 
     res = main_worker(options)
     df = pd.DataFrame(results)
