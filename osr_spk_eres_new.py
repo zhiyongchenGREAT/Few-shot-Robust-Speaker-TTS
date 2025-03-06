@@ -17,6 +17,7 @@ from my_datasets.osr_dataloader_spk_n import SpeakerDataloader
 from utils import Logger, save_networks, load_networks
 from core import train, test, test_my
 from score.my_scorer import score_me
+from score.evaluate_metrics import calculate_eer_metrics, print_metrics
 
 parser = argparse.ArgumentParser("Training")
 
@@ -106,8 +107,10 @@ def main_worker(options):
     # Evaluation
     if options['eval']:
         net, criterion = load_networks(net, model_path, file_name, criterion=criterion)
-        results = test(net, criterion, testloader, outloader, epoch=0, **options)
+        results, _pred_emb, _labels, _pred_emb_u,_pred_k,_pred_u,_out_labels = test_my(net, criterion, testloader, outloader, epoch=0, **options)
+        eer = calculate_eer_metrics(_pred_k, _labels, _pred_u)
         print("Acc (%): {:.3f}\t AUROC (%): {:.3f}\t OSCR (%): {:.3f}\t".format(results['ACC'], results['AUROC'], results['OSCR']))
+        print_metrics(eer)
         return results
 
     params_list = [{'params': net.parameters()},
@@ -125,45 +128,13 @@ def main_worker(options):
 
         if options['eval_freq'] > 0 and (epoch+1) % options['eval_freq'] == 0 or (epoch+1) == options['max_epoch']:
             print("==> Test", options['loss'])
-            results = test(net, criterion, testloader, outloader, epoch=epoch, **options)
+            results, _pred_emb, _labels, _pred_emb_u,_pred_k,_pred_u,_out_labels = test_my(net, criterion, testloader, outloader, **options)
+            eer = calculate_eer_metrics(_pred_k, _labels, _pred_u)
             print("Acc (%): {:.3f}\t AUROC (%): {:.3f}\t OSCR (%): {:.3f}\t".format(results['ACC'], results['AUROC'], results['OSCR']))
+            print_metrics(eer)
+
             save_networks(net, model_path, file_name, criterion=criterion)
             print("model path: ", model_path)
-            
-            results, _pred_emb, _labels, _pred_emb_u,_pred_k,_pred_u,_out_labels = test_my(net, criterion, testloader, outloader, **options)
-        
-            num_samples = _pred_k.shape[0]  
-            num_classes = _pred_k.shape[1]
-            score_list = []
-            label_list = []
-
-            for i in range(num_samples):
-                logits = _pred_k[i]  
-                true_label = _labels[i]  
-                for cls in range(num_classes):
-                    score_list.append(logits[cls]) 
-                    label_list.append(1 if cls == true_label else 0) 
-                    
-            num_out_samples = _pred_u.shape[0]  
-            num_out_classes = _pred_u.shape[1]
-
-            for i in range(num_out_samples):
-                logits = _pred_u[i]  
-                for cls in range(num_out_classes):
-                    score_list.append(logits[cls])  
-                    label_list.append(0) 
-
-            score_list = np.array(score_list)
-            label_list = np.array(label_list)
-
-            configuration = {
-                'p_target': [0.1],  
-                'c_miss': 1,          
-                'c_fa': 1                
-            }
-            eer, min_c, act_c = score_me(score_list, label_list, configuration)
-            print(f"EER: {eer * 100:.2f}%")
-            print(f"Min_C: {min_c:.3f}")
 
         if options['stepsize'] > 0: scheduler.step()
 
