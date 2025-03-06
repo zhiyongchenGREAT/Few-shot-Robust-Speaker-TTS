@@ -64,7 +64,7 @@ We provide augmented datasets (in ERes2Net embedding format) generated using mul
 
 ### Pretrained Weights
 
-Access the pretrained weights of one split for ESD and Voxwatch for demostration:
+Access the pretrained weights of one split for ESD and Voxwatch for demonstration:
 
 <a href="https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS">
   <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" width="30" />
