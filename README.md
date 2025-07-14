@@ -12,9 +12,7 @@ To overcome these limitations, we introduce a novel framework for time-varying a
 - **Optimized synthetic data selection strategies** and **open-set SpeakerRPL loss training** to enhance generalization and robustness against both intrinsic variability and unknown outliers.
 
 Our method demonstrates strong performance across multiple emotionally diverse and time-varying benchmarks, pushing the boundaries of robust speaker recognition in real-world scenarios.
-##
-- [ ] TODO: Check running for osr_spk_eres.py
-- [ ] TODO: Check introduction to datasets
+
 
 
 ## Code
