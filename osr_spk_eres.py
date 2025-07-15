@@ -110,7 +110,7 @@ def main_worker(options):
     # Evaluation
     if options['eval']:
         net, criterion = load_networks(net, model_path, name=options['model'], loss=options['loss'], criterion=criterion)
-        results, _pred_emb, _labels, _pred_emb_u,_pred_k,_pred_u,_out_labels = test_my(net, criterion, testloader, outloader, epoch=0, **options)
+        results, _pred_emb, _labels, _pred_emb_u,_pred_k,_pred_u = test_my(net, criterion, testloader, outloader, epoch=0, **options)
         eer = calculate_eer_metrics(_pred_k, _labels, _pred_u)
         print("Acc (%): {:.3f}\t AUROC (%): {:.3f}\t OSCR (%): {:.3f}\t".format(results['ACC'], results['AUROC'], results['OSCR']))
         print_metrics(eer)
@@ -131,7 +131,7 @@ def main_worker(options):
 
         if options['eval_freq'] > 0 and (epoch+1) % options['eval_freq'] == 0 or (epoch+1) == options['max_epoch']:
             print("==> Test", options['loss'])
-            results, _pred_emb, _labels, _pred_emb_u,_pred_k,_pred_u,_out_labels = test_my(net, criterion, testloader, outloader, **options)
+            results, _pred_emb, _labels, _pred_emb_u,_pred_k,_pred_u = test_my(net, criterion, testloader, outloader, **options)
             eer = calculate_eer_metrics(_pred_k, _labels, _pred_u)
             print("Acc (%): {:.3f}\t AUROC (%): {:.3f}\t OSCR (%): {:.3f}\t".format(results['ACC'], results['AUROC'], results['OSCR']))
             print_metrics(eer)

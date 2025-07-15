@@ -29,6 +29,18 @@ class Dist(nn.Module):
                 torch.zeros(num_classes * num_centers, self.feat_dim)
             )
 
+################################
+    # Sphere initialization
+################################
+        elif init == 'sphere':
+            # Let all centers be distributed on a sphere of radius 1
+            total_centers = self.num_classes * self.num_centers
+            centers_t = torch.randn(total_centers, self.feat_dim)
+            norms = torch.norm(centers_t, p=2, dim=1, keepdim=True)
+            norms = torch.clamp(norms, min=1e-8)
+            centers_t = centers_t / norms
+            self.centers = nn.Parameter(centers_t)
+
         else:
             raise ValueError(f"Unknown init type '{init}'")
 

@@ -13,7 +13,13 @@ To overcome these limitations, we introduce a novel framework for time-varying a
 
 Our method demonstrates strong performance across multiple emotionally diverse and time-varying benchmarks, pushing the boundaries of robust speaker recognition in real-world scenarios.
 
+## SpeakerRPL
 
+This repository hosts the ongoing development of the SpeakerRPL (Speaker Reciprocal Points Learning) for robust speaker recognition.
+
+- **SpeakerRPL V1**: The first version of SpeakerRPL. For details, please see our other repository: [SpeakerRPL](https://github.com/zhiyongchenGREAT/speaker-reciprocal-points-learning)
+- **Enhanced SpeakerRPL (This Repository)**: This version includes improvements of optimized synthetic data selection strategies for time-varying and emotion-robust open-set identification (OSI).
+- **🎉 SpeakerRPL V2 (Latest Version)**: The latest version featuring model fusion and further enhancements. The implementation is in `loss/SpeakerRPLv2.py` and can be run using `osr_spk_eres_fusion.py`.
 
 ## Code
 
