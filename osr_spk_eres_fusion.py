@@ -78,7 +78,7 @@ def main_worker(options):
     print("{} Preparation".format(options['dataset']))
 
     Data = SpeakerDataloader(
-        known=list(range(140)), # 40 targets + 40 unknown spk + 40 adaptive anchors
+        known=list(range(120)), # targets + unknown spk + adaptive anchors
         train_root=f'./data/vox1_eres/train{split_id}',
         test_root=f'./data/vox1_eres/test{split_id}',
         batch_size=options['batch_size']
@@ -152,8 +152,8 @@ def main_worker(options):
         rp_dict = criterion.Dist.centers.detach().cpu().numpy()
         
         if epoch == options['max_epoch'] - 1:
-            np.save(f"./CP_RP/CP__split{split_id}_seed{options['seed']}_epoch74.npy", cp_dict)
-            np.save(f"./CP_RP/RP__split{split_id}_seed{options['seed']}_epoch74.npy", rp_dict)
+            np.save(f"./CP_RP/CP__split{split_id}_seed{options['seed']}.npy", cp_dict)
+            np.save(f"./CP_RP/RP__split{split_id}_seed{options['seed']}.npy", rp_dict)
 
     elapsed = round(time.time() - start_time)
     elapsed = str(datetime.timedelta(seconds=elapsed))
@@ -218,8 +218,8 @@ def run_experiment():
     rp_vars = []
 
     for seed in seed_list:
-        cp_path = os.path.join(points_dir, f"CP__split{split_id}_seed{seed}_epoch74.npy")
-        rp_path = os.path.join(points_dir, f"RP__split{split_id}_seed{seed}_epoch74.npy")
+        cp_path = os.path.join(points_dir, f"CP__split{split_id}_seed{seed}.npy")
+        rp_path = os.path.join(points_dir, f"RP__split{split_id}_seed{seed}.npy")
 
 
         cp = np.load(cp_path)[:55] # 55 = 5 targets + 50 unknown spk

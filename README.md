@@ -1,32 +1,38 @@
 # Few-shot Robust Speaker Recognition with TTS  
-*Towards Robust Speaker Recognition against Intrinsic Variation with Foundation Model Few-shot Tuning and Effective Speech Synthesis*
+*SpeakerRPL V2: Robust Open-set Speaker Identification through Enhanced Few-shot Foundation Tuning and Model Fusion*
 
 ## Overview
 
-Speaker recognition is a cornerstone for secure authentication and personalized voice assistants in smart home environments. However, intrinsic speaker variability—such as aging and emotional fluctuations—poses significant challenges. Traditional approaches, which rely heavily on pretraining and large datasets, often struggle to adapt to dynamic conditions.
+Speaker recognition is a cornerstone for secure authentication and personalized voice assistants in smart home environments. To further improve robustness, we propose a model fusion strategy and a novel model selection policy that identifies the most suitable candidate models for fusion, ultimately enhancing robustness and improving open-set speaker identification performance.
 
-To overcome these limitations, we introduce a novel framework for time-varying and emotion-robust open-set identification (OSI). Our approach leverages:
+The primary contributions are summarized as follows:
 
-- **Few-shot foundation model tuning** at enrollment, enabling rapid adaptation with limited data.
-- **Style-rich zero-shot text-to-speech (TTS) synthesis** to augment training data with diverse speech characteristics.
-- **Optimized synthetic data selection strategies** and **open-set SpeakerRPL loss training** to enhance generalization and robustness against both intrinsic variability and unknown outliers.
+- **Improved Open-set Learning Objective** integrating reciprocal points learning, logit normalization, and adaptive anchor learning to yield robust speaker embeddings.
+- **Effective Model Fusion Strategy** to reduce inherent randomness and enhance generalization.
+- **Post-tuning Model Selection Policy** to preserve the most effective tuned models, thus ensuring optimal fusion performance.
 
-Our method demonstrates strong performance across multiple emotionally diverse and time-varying benchmarks, pushing the boundaries of robust speaker recognition in real-world scenarios.
+Comprehensive experiments of SpeakerRPL V2 on diverse speaker recognition benchmarks validate the effectiveness and reliability of the proposed method across different scenarios.
 
 ## SpeakerRPL
 
 This repository hosts the ongoing development of the SpeakerRPL (Speaker Reciprocal Points Learning) for robust speaker recognition.
 
 - **SpeakerRPL V1**: The first version of SpeakerRPL. For details, please see our other repository: [SpeakerRPL](https://github.com/zhiyongchenGREAT/speaker-reciprocal-points-learning)
-- **Enhanced SpeakerRPL (This Repository)**: This version includes improvements of optimized synthetic data selection strategies for time-varying and emotion-robust open-set identification (OSI).
-- **🎉 SpeakerRPL V2 (Latest Version)**: The latest version featuring model fusion and further enhancements. The implementation is in `loss/SpeakerRPLv2.py` and can be run using `osr_spk_eres_fusion.py`.
+- **Enhanced SpeakerRPL**: This version includes improvements of optimized synthetic data selection strategies for time-varying and emotion-robust open-set identification (OSI).
+- **🎉 SpeakerRPL V2 (This Repository)**: The latest version featuring model fusion and further enhancements. The implementation is in `loss/SpeakerRPLv2.py` and can be run using `osr_spk_eres_fusion.py`.
 
 ## Code
 
 Run the few-shot training script for each evaluation split:
 
+*SpeakerRPL V1:*
 ```bash
 python osr_spk_eres.py --loss SpeakerRPL --finetune-data-split {} --evaluation-data-split {}
+```
+
+*SpeakerRPL V2:*
+```bash
+python osr_spk_eres_fusion.py --loss SpeakerRPLv2 ----split-id {}
 ```
 
 Other loss functions can be tried by varying the *loss* parameter.
@@ -57,28 +63,16 @@ Our training and testing datasets are available on Hugging Face:
 
 [Robust Speaker Recognition OSI with TTS](https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS)
 
-We provide augmented datasets (in ERes2Net embedding format) generated using multiple data augmentation and sampling strategies, as described in the paper. These datasets are directly usable with the training script and include evaluation splits for all four benchmark datasets. We also provide the original, unaugmented, and unarranged waveforms for each speaker to facilitate further research.
+We provide datasets (in ERes2Net embedding format) generated using multiple data augmentation and sampling strategies, as described in the paper. These datasets are directly usable with the training script and include evaluation splits for all four benchmark datasets. We also provide the original waveforms of VoxCeleb2 dataset for each split to facilitate further research.
 
 | Dataset                       | Description                                                        |
 |-------------------------------|--------------------------------------------------------------------|
-| **ESD**                     | Strong emotion variation                                           |
-| **IEMOCAP**                 | Strong emotion variation and wild-collected data                   |
-| **Voxceleb2(test)-Voxwatch**  | 110+ speakers in the wild                                          |
-| **SpeakerAging**            | 15+ speakers with short-term variation (1-year timespan)            |
+| **VoxCeleb2(test)**                     | 110+ speakers in the wild                                           |
+| **3D-Speaker**                 | dataset aross dialect/distance/device                   |
+| **ESD**  | strong emotion variation                                    |
+| **Vox1-O(revised)**            | revised from vox1-o trial list of 40 speakers            |
 
-### Pretrained Weights
 
-Access the pretrained weights of one split for ESD and Voxwatch for demonstration:
-
-<a href="https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS">
-  <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" width="30" />
-</a>
-
-[Robust Speaker Recognition OSI with TTS](https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS)
-
-```bash
-osr_spk_eres.py --loss SpeakerRPL --model-path {} --evaluation-data-split {}
-```
 
 ## Dataset Directory Structure (Embeddings for Experiments)
 
@@ -108,9 +102,9 @@ If you use our work, please cite:
 
 ```
 @article{ThisPaperReference,
-  title={Towards Robust Speaker Recognition against Intrinsic Variation with Foundation Model Few-shot Tuning and Effective Speech Synthesis},
-  journal={Interspeech 2025},
-  year={2025}
+  title={SpeakerRPL V2: Robust Open-set Speaker Identification through Enhanced Few-shot Foundation Tuning and Model Fusion},
+  journal={ICASSP 2026},
+  year={2026}
 }
 ```
 
