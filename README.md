@@ -73,6 +73,7 @@ We provide datasets (in ERes2Net embedding format) generated using multiple data
 | **3D-Speaker**                 | dataset aross dialect/distance/device                   |
 | **ESD**  | strong emotion variation                                    |
 | **Vox1-O(revised)**            | revised from vox1-o trial list of 40 speakers            |
+
 ⚠️ *Note:* Vox1-O(revised) trial list can be found in `vox1-o_sid.txt`, revised by `vox1-o_revise.ipynb`.
 
 
