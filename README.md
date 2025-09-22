@@ -17,11 +17,18 @@ Comprehensive experiments of SpeakerRPL V2 on diverse speaker recognition benchm
 
 This repository hosts the ongoing development of the **SpeakerRPL (Speaker Reciprocal Points Learning)** framework for robust speaker recognition.
 
-| Version                      | Description                                                        |
+<!-- | Version                      | Description                                                        |
 |-------------------------------|--------------------------------------------------------------------|
 | **SpeakerRPL V1**             | Initial version. See: [SpeakerRPL](https://github.com/zhiyongchenGREAT/speaker-reciprocal-points-learning)                                         |
 | **Enhanced SpeakerRPL**       | Includes optimized synthetic data selection for time/emotion-robust open-set identification (OSI). |
-| **🎉 SpeakerRPL V2**          | The latest version featuring **optimal open-set learning**, **model fusion** and **enhanced selection policies**. Implemented in `loss/SpeakerRPLv2.py`.|
+| **🎉 SpeakerRPL V2**          | The latest version featuring **optimal open-set learning**, **model fusion** and **enhanced selection policies**. Implemented in `loss/SpeakerRPLv2.py`.| -->
+
+| Version                | Description                                                                 |
+|-------------------------|-----------------------------------------------------------------------------|
+| **SpeakerRPL V1**       | Initial version. See: [SpeakerRPL](https://github.com/zhiyongchenGREAT/speaker-reciprocal-points-learning) |
+| **Enhanced SpeakerRPL** | Optimized synthetic data selection for robust OSI (time & emotion).         |
+| **🎉 SpeakerRPL V2**    | Adds **optimal open-set learning**, **model fusion**, and **enhanced selection policies**. |
+
 
 ## 🚀 Quick Start
 
