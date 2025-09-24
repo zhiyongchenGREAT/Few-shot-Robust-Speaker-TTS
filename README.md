@@ -66,7 +66,7 @@ syn_select_controlling_policy.ipynb
 
 Our training and testing datasets are available on Hugging Face:
 
-<a href="https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS">
+<a href="https://huggingface.co/datasets/ShirleyWu/SpeakerRPLv2">
   <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" width="30" />
 </a>
 
