@@ -87,7 +87,7 @@ We provide datasets (in ERes2Net embedding format) generated using multiple data
 
 ## 🗂 Dataset Directory Structure (Embeddings for Experiments)
 
-The embedding datasets <a href="https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS">
+The embedding datasets <a href="https://huggingface.co/datasets/ShirleyWu/SpeakerRPLv2">
   <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" width="30" />
 </a> for each split are organized as follows:
 
