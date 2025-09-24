@@ -70,7 +70,7 @@ Our training and testing datasets are available on Hugging Face:
   <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" width="30" />
 </a>
 
-[Robust Speaker Recognition OSI with TTS](https://huggingface.co/datasets/zhiyongchen/robust_speaker_recognition_OSI_with_TTS)
+[SpeakerRPLv2](https://huggingface.co/datasets/ShirleyWu/SpeakerRPLv2)
 
 We provide datasets (in ERes2Net embedding format) generated using multiple data augmentation and sampling strategies, as described in the paper. These datasets are directly usable with the training script and include evaluation splits for all four benchmark datasets. We also provide the original waveforms of VoxCeleb2(test) dataset for each split to facilitate further research.
 
